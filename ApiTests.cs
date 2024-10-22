@@ -8,7 +8,7 @@ public class ApiTests : TestBase
     [TestMethod]
     public async Task GetBooks()
     {
-        Books actualBooks = await anonymusClient.GetFromJsonAsync<Books>("BookStore/v1/Books");
+        Books actualBooks = await anonymousClient.GetFromJsonAsync<Books>("BookStore/v1/Books");
         Assert.AreEqual(8, actualBooks.books.Length);
         //Validate first book in the list
         Book expectedBook1 = new Book
@@ -91,11 +91,11 @@ public class ApiTests : TestBase
     }
 
     [TestMethod]
-    public async Task AddListOfBooksToUser_401()
+    public async Task AddListOfBooksToUser_InvalidAuthorizationHeader_401()
     {
         AddListOfBooks listOfBooks = new AddListOfBooks
         {
-            userId = "badUserId",
+            userId = "d4e2fd50-cc12-42d8-8e93-1a1b0ce693c0",
             collectionOfIsbns = [
                 new Isbn{ isbn = "9781593275846"},
             ]
@@ -104,16 +104,30 @@ public class ApiTests : TestBase
         Assert.AreEqual(System.Net.HttpStatusCode.Unauthorized, response.StatusCode);
     }
 
+    [TestMethod]
+    public async Task AddListOfBooksToUser_InvalidUserId_401()
+    {
+        AddListOfBooks listOfBooks = new AddListOfBooks
+        {
+            userId = "invalidUserId",
+            collectionOfIsbns = [
+                new Isbn{ isbn = "9781593275846"},
+            ]
+        };
+        using HttpResponseMessage response = await authorizedClient.PostAsJsonAsync("BookStore/v1/Books", listOfBooks);
+        Assert.AreEqual(System.Net.HttpStatusCode.Unauthorized, response.StatusCode);
+    }
+
     public void BooksAreEaqual(Book expectedBook, Book actualBook)
     {
-        Assert.IsNotNull(actualBook, $"Expected that book: Git Pocket Guide appears in the book list");
+        Assert.IsNotNull(actualBook, $"Expected that book: {actualBook.title} appears in the book list");
         Assert.AreEqual(expectedBook.isbn, actualBook.isbn);
         Assert.AreEqual(expectedBook.subTitle, actualBook.subTitle);
         Assert.AreEqual(expectedBook.author, actualBook.author);
         Assert.AreEqual(expectedBook.publish_date, actualBook.publish_date);
         Assert.AreEqual(expectedBook.publisher, actualBook.publisher);
         Assert.AreEqual(expectedBook.pages, actualBook.pages);
-        Assert.IsTrue(actualBook.description.Contains(expectedBook.description), $"Expected book: {actualBook.title} to have this text in description: {expectedBook.description}");
+        StringAssert.Contains(actualBook.description, expectedBook.description, $"Expected book: {actualBook.title} to have this text in description: {expectedBook.description}");
         Assert.AreEqual(expectedBook.website, actualBook.website);
     }
 }

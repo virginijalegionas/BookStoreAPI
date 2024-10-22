@@ -8,7 +8,7 @@ namespace BookStoreAPI
         private static Uri pageUrl = new Uri("https://demoqa.com/");
 
         public static HttpClient authorizedClient;
-        public static HttpClient anonymusClient;
+        public static HttpClient anonymousClient;
         public static HttpClient unauthorizedClient;
 
         [AssemblyInitialize]
@@ -22,13 +22,13 @@ namespace BookStoreAPI
             unauthorizedClient.BaseAddress = pageUrl;
             AddClientAuthorization(unauthorizedClient, "noUser", "noPassword");
 
-            anonymusClient = new HttpClient();
-            anonymusClient.BaseAddress = pageUrl;
+            anonymousClient = new HttpClient();
+            anonymousClient.BaseAddress = pageUrl;
         }
 
-        public static void AddClientAuthorization(HttpClient client, string userName, string UserPassword)
+        public static void AddClientAuthorization(HttpClient client, string userName, string userPassword)
         {
-            string authenticationString = $"{userName}:{UserPassword}";
+            string authenticationString = $"{userName}:{userPassword}";
             string base64EncodedAuthenticationString = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authenticationString));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64EncodedAuthenticationString);
         }
