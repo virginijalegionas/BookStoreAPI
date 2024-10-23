@@ -95,7 +95,7 @@ public class ApiTests : TestBase
             userId = userId,
             collectionOfIsbns = [
                 new Isbn{ isbn = "nonExisting"},
-                ]
+            ]
         };
         using HttpResponseMessage response = await authorizedClient.PostAsJsonAsync("BookStore/v1/Books", listOfBooks);
         Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
@@ -131,8 +131,8 @@ public class ApiTests : TestBase
         {
             userId = userId,
             collectionOfIsbns = [
-                    new Isbn{ isbn = isbnToAdd},
-                ]
+                new Isbn{ isbn = isbnToAdd},
+            ]
         };
         using HttpResponseMessage response = await authorizedClient.PostAsJsonAsync("BookStore/v1/Books", addingSameBooks);
         Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
@@ -148,7 +148,7 @@ public class ApiTests : TestBase
             userId = userId,
             collectionOfIsbns = [
                 new Isbn{ isbn = "9781593275846"},
-                ]
+            ]
         };
         using HttpResponseMessage response = await unauthorizedClient.PostAsJsonAsync("BookStore/v1/Books", listOfBooks);
         Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
@@ -162,7 +162,7 @@ public class ApiTests : TestBase
             userId = "invalidUserId",
             collectionOfIsbns = [
                 new Isbn{ isbn = "9781593275846"},
-                ]
+            ]
         };
         using HttpResponseMessage response = await authorizedClient.PostAsJsonAsync("BookStore/v1/Books", listOfBooks);
         Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
@@ -215,53 +215,17 @@ public class ApiTests : TestBase
     [TestMethod]
     public async Task DeleteAllBooksFromUserList_InvalidAuthorizationHeader_401()
     {
-        //First need to Check if there are any books in user list
-        UserBooks userBooks = await GetUserBooks(userId);
-        if (userBooks.books.Length > 0)
-        {
-            AddListOfBooks listOfBooks = new AddListOfBooks
-            {
-                userId = userId,
-                collectionOfIsbns = [
-                new Isbn{ isbn = "9781491950296"},
-                new Isbn{ isbn = "9781593275846"},
-            ]
-            };
-            //add some books
-            AddedListOfBooks addedListOfBooks = await AddBooksToUserList(listOfBooks);
-            Assert.AreEqual(2, addedListOfBooks.books.Length);
-        }
         //trying to delete books
         using HttpResponseMessage response = await unauthorizedClient.DeleteAsync($"BookStore/v1/Books?UserId={userId}");
         Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
-        //test cleanup
-        DeleteAllBooksFromUserList(userId);
     }
 
     [TestMethod]
     public async Task DeleteAllBooksFromUserList_InvalidUserId_401()
     {
-        //First need to Check if there are any books in user list
-        UserBooks userBooks = await GetUserBooks(userId);
-        if (userBooks.books.Length > 0)
-        {
-            AddListOfBooks listOfBooks = new AddListOfBooks
-            {
-                userId = userId,
-                collectionOfIsbns = [
-                new Isbn{ isbn = "9781491950296"},
-                new Isbn{ isbn = "9781593275846"},
-            ]
-            };
-            //add some books
-            AddedListOfBooks addedListOfBooks = await AddBooksToUserList(listOfBooks);
-            Assert.AreEqual(2, addedListOfBooks.books.Length);
-        }
         //trying to delete books
         using HttpResponseMessage response = await authorizedClient.DeleteAsync("BookStore/v1/Books?UserId=invalidId");
         Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
-        //test cleanup
-        DeleteAllBooksFromUserList(userId);
     }
 
     [TestMethod]
@@ -280,9 +244,9 @@ public class ApiTests : TestBase
             {
                 userId = userId,
                 collectionOfIsbns = [
-                new Isbn{ isbn = "9781491950296"},
-                new Isbn{ isbn = "9781593275846"},
-            ]
+                    new Isbn{ isbn = "9781491950296"},
+                    new Isbn{ isbn = "9781593275846"},
+                ]
             };
             //add some books
             AddedListOfBooks addedListOfBooks = await AddBooksToUserList(listOfBooks);
@@ -322,8 +286,8 @@ public class ApiTests : TestBase
         {
             userId = userId,
             collectionOfIsbns = [
-            new Isbn{ isbn = "9781491950296"},
-            new Isbn{ isbn = "9781593275846"},
+                new Isbn{ isbn = "9781491950296"},
+                new Isbn{ isbn = "9781593275846"},
             ]
         };
         AddedListOfBooks addedListOfBooks = await AddBooksToUserList(listOfBooks);
@@ -359,8 +323,8 @@ public class ApiTests : TestBase
         {
             userId = userId,
             collectionOfIsbns = [
-            new Isbn{ isbn = "9781491950296"},
-            new Isbn{ isbn = "9781593275846"},
+                new Isbn{ isbn = "9781491950296"},
+                new Isbn{ isbn = "9781593275846"},
             ]
         };
         AddedListOfBooks addedListOfBooks = await AddBooksToUserList(listOfBooks);
@@ -394,8 +358,8 @@ public class ApiTests : TestBase
         {
             userId = userId,
             collectionOfIsbns = [
-            new Isbn{ isbn = "9781491950296"},
-            new Isbn{ isbn = "9781593275846"},
+                new Isbn{ isbn = "9781491950296"},
+                new Isbn{ isbn = "9781593275846"},
             ]
         };
         AddedListOfBooks addedListOfBooks = await AddBooksToUserList(listOfBooks);
@@ -429,8 +393,8 @@ public class ApiTests : TestBase
         {
             userId = userId,
             collectionOfIsbns = [
-            new Isbn{ isbn = "9781491950296"},
-            new Isbn{ isbn = "9781593275846"},
+                new Isbn{ isbn = "9781491950296"},
+                new Isbn{ isbn = "9781593275846"},
             ]
         };
         AddedListOfBooks addedListOfBooks = await AddBooksToUserList(listOfBooks);
@@ -464,8 +428,8 @@ public class ApiTests : TestBase
         {
             userId = userId,
             collectionOfIsbns = [
-            new Isbn{ isbn = "9781491950296"},
-            new Isbn{ isbn = "9781593275846"},
+                new Isbn{ isbn = "9781491950296"},
+                new Isbn{ isbn = "9781593275846"},
             ]
         };
         AddedListOfBooks addedListOfBooks = await AddBooksToUserList(listOfBooks);
