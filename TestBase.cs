@@ -5,7 +5,8 @@ namespace BookStoreAPI
     [TestClass]
     public class TestBase
     {
-        private static Uri pageUrl = new Uri("https://demoqa.com/");
+        protected static string userId;
+        protected static Uri pageUrl = new Uri("https://demoqa.com/");
 
         public static HttpClient authorizedClient;
         public static HttpClient anonymousClient;
@@ -14,9 +15,10 @@ namespace BookStoreAPI
         [AssemblyInitialize]
         public static void Initialize(TestContext testContext)
         {
+            userId = testContext.Properties["userId"] as string;
             authorizedClient = new HttpClient();
             authorizedClient.BaseAddress = pageUrl;
-            AddClientAuthorization(authorizedClient, "userv", "Fdlgjkdlfg2232###");
+            AddClientAuthorization(authorizedClient, testContext.Properties["userName"] as string, testContext.Properties["userPassword"] as string);
 
             unauthorizedClient = new HttpClient();
             unauthorizedClient.BaseAddress = pageUrl;
