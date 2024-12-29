@@ -6,10 +6,10 @@ Project goal: become familiar with API tests and get some practice
 - coded with C#
 
 **Run Settings need these properties to be specified:**
-All the parameters below are created in the demo page
-userName - user name, specified when you creating user in the demo page
-userPassword - user password, specified when you create user in the demo page
-userId - user Id, generated in demo page, when user is created.
+All the parameters below are created in the demo page:
+- userName - user name, specified when you creating user in the demo page
+- userPassword - user password, specified when you create user in the demo page
+- userId - user Id, generated in demo page, when user is created.
 
 
 **Test cases covered by API tests:**
