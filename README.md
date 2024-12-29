@@ -19,14 +19,24 @@ like it's shown in the picture: green is appPackage, yellow is appActivity
 
 **Tip:** use this command to run tests in terminal, if you want to see more detailed test results: dotnet test -l "console;verbosity=detailed" --settings:.runSettings
 
-**API tests handle these situations:**
-- Product sorting
-- Product page
-- Basket operations
-- Buy product with login
-- Buy product without login
-- Mandatory fields
-- Login logout
+**Test cases covered by API tests:**
+- Get All Books - Success Scenario
+-  Add, Delete List Of Books To User - Success Scenario
+-  Add List Of Books To User - When NonExisting Isbn Number
+-  Add List Of Books To User - Invalid Authorization Header
+-  Add List Of Books To User - Invalid UserId
+-  Add Book To User - Book Is Already Added
+-  Get Book By Isbn Number - Success Scenario
+-  Get Book By Isbn Number - Isbn Not Found
+-  Delete All Books From User List - Invalid Authorization Header
+-  Delete All Books From User List - Invalid User Id
+-  Delete One Book From User List - Success Scenario
+-  Replace Book In User List - Success Scenario
+-  Replace Book In User List - Invalid Authorization Header
+-  Replace Book In User List - Invalid UserId
+-  Replace Book In User List - Isbn Number For Replace Not Found
+-  Replace Book In User List - Isbn Number To Replace Not Found
+
 
 
 
